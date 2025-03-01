@@ -43,7 +43,28 @@ def pronouns(seed: int) -> dict:
     }
 
 def verbs(seed: int) -> dict:
-    return {}
+    num_conjugations = (seed * prime()) % 4 + 1
+
+    tense_construction_is_inflected = {
+        "present": True,
+        "imperfect": (seed * prime()) % 2,
+        "perfect": (seed * prime()) % 2,
+        "pluperfect": (seed * prime()) % 2,
+        "future": (seed * prime()) % 2,
+        "future perfect": (seed * prime()) % 2
+    }
+
+    return {
+        "num_conjugations": num_conjugations,
+        "tense_construction_is_inflected": tense_construction_is_inflected
+    }
 
 def adjectives(seed: int) -> dict:
-    return {}
+    match (seed * prime()) % 2:
+        case 0:
+            agrees = False
+        case 1:
+            agrees = True
+    return {
+        "agrees": agrees
+    }
