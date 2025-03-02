@@ -1,7 +1,10 @@
 import json
+import os
+
+os.chdir(os.path.dirname(__file__))
 
 def romanji_to_hirigana(a: str):
-    for old, new in {
+    mappings = {
         "chiji": "ちぢ",
         "suzu": "すづ",
 
@@ -90,8 +93,11 @@ def romanji_to_hirigana(a: str):
         "i": "い",
         "o": "お",
         "u": "う"
-    }:
+    }
+    for old, new in zip(mappings.keys(), mappings.values()):
         a = a.replace(old, new)
+
+    return a
 
 def hirigana_to_katakana(a: str):
     pass
@@ -102,8 +108,11 @@ def english(seed):
 def russian(seed):
     with open("english-words.json") as f: data = json.loads(f.read())
 
-def japanese_hirigana(seed):
+def japanese_hirigana():
     with open("english-words.json") as f: data = json.loads(f.read())
+    with open("out.txt", "w") as f:
+        for x in data:
+            f.write(romanji_to_hirigana(x) + "\n")
 
 def japanese_katakana(seed):
     pass
@@ -119,3 +128,6 @@ def hirigana(seed):
 
 def katakana(seed):
     pass
+
+if __name__ == "__main__":
+    japanese_hirigana()
